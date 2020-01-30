@@ -282,9 +282,6 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 # https://github.com/gsamokovarov/jump
 eval "$(jump shell)"
 
-# brew install rbenv
-eval "$(rbenv init -)"
-
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/fatih/Code/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/fatih/Code/google-cloud-sdk/path.zsh.inc'; fi
 
