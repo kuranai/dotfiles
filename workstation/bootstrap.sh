@@ -99,6 +99,13 @@ sudo apt-get install -qq \
   vim-gtk3 \
   zsh \
   postgresql \
+  zlib1g-dev \
+  libbz2-dev \
+  libreadline-dev \
+  llvm \
+  libncurses5-dev \
+  libncursesw5-dev \
+  python3-dev \
   --no-install-recommends \
 
 rm -rf /var/lib/apt/lists/*
@@ -134,6 +141,17 @@ if ! [ -x "$(command -v bw)" ]; then
   sudo mv bw /usr/local/bin
   sudo chmod a+x /usr/local/bin/bw
   rm bw-linux*.zip
+fi
+
+#Install pipx
+if ! [ -x "$(command -v pipx)" ]; then
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
+#Install some python packages with pipx
+pipx install howdoi
+pipx install black
+pipx install mypy
+pipx install pgcli
 fi
 
 # install kubectl
