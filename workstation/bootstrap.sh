@@ -132,6 +132,7 @@ if ! [ -x "$(command -v bw)" ]; then
   unzip bw-linux*.zip
   sudo mv bw /usr/local/bin
   sudo chmod a+x /usr/local/bin/bw
+  rm bw-linux*.zip
 fi
 
 # install kubectl
@@ -309,21 +310,16 @@ cat > pull-secrets.sh <<'EOF'
 
 set -eu
 
-echo "Authenticating with 1Password"
-export OP_SESSION_my=$(op signin https://my.1password.com ftharsln@gmail.com --output=raw)
+echo "Authenticating with bitwarden"
+export BW_SESSION=$(bw login --raw)
 
 echo "Pulling secrets"
 
-op get document 'github_rsa' > github_rsa
-op get document 'zsh_private' > zsh_private
-op get document 'zsh_history' > zsh_history
+bw get attachment github_rsa --itemid 96d4043b-16ea-42f5-8e7c-ab5400ef906a
 
 rm -f ~/.ssh/github_rsa
 ln -sfn $(pwd)/github_rsa ~/.ssh/github_rsa
 chmod 0600 ~/.ssh/github_rsa
-
-ln -sfn $(pwd)/zsh_private ~/.zsh_private
-ln -sfn $(pwd)/zsh_history ~/.zsh_history
 
 echo "Done!"
 EOF
