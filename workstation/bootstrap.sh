@@ -98,6 +98,7 @@ sudo apt-get install -qq \
   zlib1g-dev \
   vim-gtk3 \
   zsh \
+  postgresql \
   --no-install-recommends \
 
 rm -rf /var/lib/apt/lists/*
