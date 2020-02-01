@@ -288,3 +288,4 @@ if [ -f '/Users/fatih/Code/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/fati
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/fatih/Code/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/fatih/Code/google-cloud-sdk/completion.zsh.inc'; fi
 export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+export PATH="$PATH:/root/.local/bin"
