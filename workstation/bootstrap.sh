@@ -352,5 +352,12 @@ fi
 # Set correct timezone
 timedatectl set-timezone Europe/Berlin
 
+# Setup postgresql for dev
+sed -i 's/md5/trust/g' /etc/postgresql/11/main/pg_hba.conf
+sed -i 's/peer/trust/g' /etc/postgresql/11/main/pg_hba.conf
+service postgresql restart
+sudo -u postgres psql -c "CREATE ROLE root WITH SUPERUSER LOGIN"
+sudo -u postgres psql -c "CREATE DATABASE dev"
+
 echo ""
 echo "==> Done!"
