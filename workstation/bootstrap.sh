@@ -148,10 +148,10 @@ if ! [ -x "$(command -v pipx)" ]; then
 python3 -m pip install --user pipx
 python3 -m pipx ensurepath
 #Install some python packages with pipx
-pipx install howdoi
-pipx install black
-pipx install mypy
-pipx install pgcli
+/root/.local/bin/pipx install howdoi
+/root/.local/bin/pipx install black
+/root/.local/bin/pipx install mypy
+/root/.local/bin/pipx install pgcli
 fi
 
 # install kubectl
