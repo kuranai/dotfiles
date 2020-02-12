@@ -106,6 +106,8 @@ sudo apt-get install -qq \
   libncurses5-dev \
   libncursesw5-dev \
   python3-dev \
+  default-jre \
+  default-jdk \
   --no-install-recommends \
 
 rm -rf /var/lib/apt/lists/*
