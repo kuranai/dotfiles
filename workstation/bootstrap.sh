@@ -8,22 +8,11 @@ UPGRADE_PACKAGES=${1:-none}
 
 if [ "${UPGRADE_PACKAGES}" != "none" ]; then
   echo "==> Updating and upgrading packages ..."
-
-  # Add third party repositories
-  sudo add-apt-repository ppa:keithw/mosh-dev -y
-  sudo add-apt-repository ppa:jonathonf/vim -y
-
-  CLOUD_SDK_SOURCE="/etc/apt/sources.list.d/google-cloud-sdk.list"
-  CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
-  if [ ! -f "${CLOUD_SDK_SOURCE}" ]; then
-    echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | tee -a ${CLOUD_SDK_SOURCE}
-    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-  fi
-
   sudo apt-get update
   sudo apt-get upgrade -y
 fi
 
+echo "==> Installing apt packages ..."
 sudo apt-get install -qq \
   apache2-utils \
   apt-transport-https \
@@ -42,8 +31,6 @@ sudo apt-get install -qq \
   git-crypt \
   gnupg \
   gnupg2 \
-  google-cloud-sdk \
-  google-cloud-sdk-app-engine-go \
   htop \
   hugo \
   ipcalc \
@@ -114,7 +101,7 @@ rm -rf /var/lib/apt/lists/*
 
 # install Go
 if ! [ -x "$(command -v go)" ]; then
-  export GO_VERSION="1.13.6"
+  export GO_VERSION="1.14.2"
   wget "https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz" 
   tar -C /usr/local -xzf "go${GO_VERSION}.linux-amd64.tar.gz" 
   rm -f "go${GO_VERSION}.linux-amd64.tar.gz"
@@ -132,7 +119,7 @@ if ! [ -x "$(command -v nvim)" ]; then
 fi
 
 # install nodejs
-if ! [ -x "$(command -v nvim)" ]; then
+if ! [ -x "$(command -v node)" ]; then
   curl -sL install-node.now.sh | sh
 fi
 
@@ -164,7 +151,7 @@ fi
 
 # install doctl
 if ! [ -x "$(command -v doctl)" ]; then
-  export DOCTL_VERSION="1.36.0"
+  export DOCTL_VERSION="1.42.0"
   wget https://github.com/digitalocean/doctl/releases/download/v${DOCTL_VERSION}/doctl-${DOCTL_VERSION}-linux-amd64.tar.gz
   tar xf doctl-${DOCTL_VERSION}-linux-amd64.tar.gz 
   chmod +x doctl 
@@ -174,7 +161,7 @@ fi
 
 # install terraform
 if ! [ -x "$(command -v terraform)" ]; then
-  export TERRAFORM_VERSION="0.12.19"
+  export TERRAFORM_VERSION="0.12.24"
   wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip 
   unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip 
   chmod +x terraform
@@ -184,7 +171,7 @@ fi
 
 # install protobuf
 if ! [ -x "$(command -v protoc)" ]; then
-  export PROTOBUF_VERSION="3.11.2"
+  export PROTOBUF_VERSION="3.11.4"
   mkdir -p protobuf_install 
   pushd protobuf_install
   wget https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOBUF_VERSION}/protoc-${PROTOBUF_VERSION}-linux-x86_64.zip
@@ -198,7 +185,7 @@ fi
 # install tools
 if ! [ -x "$(command -v jump)" ]; then
   echo " ==> Installing jump .."
-  export JUMP_VERSION="0.23.0"
+  export JUMP_VERSION="0.30.1"
   wget https://github.com/gsamokovarov/jump/releases/download/v${JUMP_VERSION}/jump_${JUMP_VERSION}_amd64.deb
   sudo dpkg -i jump_${JUMP_VERSION}_amd64.deb
   rm -f jump_${JUMP_VERSION}_amd64.deb
@@ -206,7 +193,7 @@ fi
 
 if ! [ -x "$(command -v hub)" ]; then
   echo " ==> Installing hub .."
-  export HUB_VERSION="2.13.0"
+  export HUB_VERSION="2.14.2"
   wget https://github.com/github/hub/releases/download/v${HUB_VERSION}/hub-linux-amd64-${HUB_VERSION}.tgz
   tar xf hub-linux-amd64-${HUB_VERSION}.tgz
   chmod +x hub-linux-amd64-${HUB_VERSION}/bin/hub
@@ -355,8 +342,8 @@ fi
 timedatectl set-timezone Europe/Berlin
 
 # Setup postgresql for dev
-sed -i 's/md5/trust/g' /etc/postgresql/11/main/pg_hba.conf
-sed -i 's/peer/trust/g' /etc/postgresql/11/main/pg_hba.conf
+sed -i 's/md5/trust/g' /etc/postgresql/12/main/pg_hba.conf
+sed -i 's/peer/trust/g' /etc/postgresql/12/main/pg_hba.conf
 service postgresql restart
 sudo -u postgres psql -c "CREATE ROLE root WITH SUPERUSER LOGIN"
 sudo -u postgres psql -c "CREATE DATABASE dev"
