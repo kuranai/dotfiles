@@ -10,7 +10,6 @@ Plug 'corylanou/vim-present', {'for' : 'present'}
 Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
 Plug 'elzr/vim-json', {'for' : 'json'}
 Plug 'ervandew/supertab'
-Plug 'fatih/molokai'
 Plug 'fatih/vim-go'
 Plug 'fatih/vim-hclfmt'
 Plug 'fatih/vim-nginx' , {'for' : 'nginx'}
@@ -30,7 +29,8 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-scriptease'
-Plug 'tyru/open-browser.vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'phanviet/vim-monokai-pro'
 
 call plug#end()
 
@@ -103,9 +103,8 @@ endif
 syntax enable
 set t_Co=256
 set background=dark
-let g:molokai_original = 1
-let g:rehash256 = 1
-colorscheme molokai
+set termguicolors
+colorscheme monokai_pro
 
 augroup filetypedetect
   command! -nargs=* -complete=help Help vertical belowright help <args>
