@@ -307,6 +307,7 @@ if [ ! -d /root/code/dotfiles ]; then
   ln -sfn $(pwd)/gitconfig "${HOME}/.gitconfig"
   ln -sfn $(pwd)/agignore "${HOME}/.agignore"
   ln -sfn $(pwd)/sshconfig "${HOME}/.ssh/config"
+  ln -sfn $(pwd)/init.vim "${HOME}/.config/nvim/init.vim"
 fi
 
 
