@@ -118,6 +118,9 @@ if ! [ -x "$(command -v nvim)" ]; then
 	rm -rf nvim-linux64
 fi
 
+if ! [ -x "$(command -v starship)" ]; then
+  curl -fsSL https://starship.rs/install.sh | bash -s -- -y
+fi
 # install nodejs
 if ! [ -x "$(command -v node)" ]; then
   curl -sL install-node.now.sh | sh
@@ -308,6 +311,7 @@ if [ ! -d /root/code/dotfiles ]; then
   ln -sfn $(pwd)/agignore "${HOME}/.agignore"
   ln -sfn $(pwd)/sshconfig "${HOME}/.ssh/config"
   ln -sfn $(pwd)/init.vim "${HOME}/.config/nvim/init.vim"
+  ln -sfn $(pwd)/starship.toml "${HOME}/.config/starship.toml"
 fi
 
 
