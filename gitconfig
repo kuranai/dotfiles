@@ -36,8 +36,8 @@
 	editor = vim
 	quotepath = false
 	excludesfile = /Users/kuranai/.gitignore_global
-[credential]
-	helper = osxkeychain
+#[credential]
+#	helper = osxkeychain
 [github]
 	user = kuranai
 [mergetool]
