@@ -312,6 +312,7 @@ if [ ! -d /root/code/dotfiles ]; then
   ln -sfn $(pwd)/sshconfig "${HOME}/.ssh/config"
   ln -sfn $(pwd)/init.vim "${HOME}/.config/nvim/init.vim"
   ln -sfn $(pwd)/starship.toml "${HOME}/.config/starship.toml"
+  ln -sfn $(pwd)/bash_profile "${HOME}/.bash_profile" 
 fi
 
 
