@@ -230,7 +230,7 @@ if [ ! -d "${HOME}/.fzf" ]; then
   git clone https://github.com/junegunn/fzf "${HOME}/.fzf"
   pushd "${HOME}/.fzf"
   git remote set-url origin git@github.com:junegunn/fzf.git 
-  ${HOME}/.fzf/install --bin --64 --no-bash --no-zsh --no-fish
+  ${HOME}/.fzf/install --bin --no-bash --no-zsh --no-fish
   popd
 fi
 
@@ -253,6 +253,9 @@ chsh -s /usr/bin/zsh
 
 echo "==> Creating dev directories"
 mkdir -p /root/code
+
+echo "==> create nvim config directory"
+mkdir -p /root/.config/nvim
 
 if [ ! -d /root/code/dotfiles ]; then
   echo "==> Setting up dotfiles"
