@@ -308,6 +308,8 @@ EOF
   mv pull-secrets.sh ~/secrets
 fi
 
+#install plugin that nvim needs
+pip3 install pynvim
 
 # Set correct timezone
 timedatectl set-timezone Europe/Berlin
