@@ -101,7 +101,7 @@ rm -rf /var/lib/apt/lists/*
 
 # install Go
 if ! [ -x "$(command -v go)" ]; then
-  export GO_VERSION="1.14.2"
+  export GO_VERSION="1.16"
   wget "https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz" 
   tar -C /usr/local -xzf "go${GO_VERSION}.linux-amd64.tar.gz" 
   rm -f "go${GO_VERSION}.linux-amd64.tar.gz"
@@ -123,7 +123,7 @@ if ! [ -x "$(command -v starship)" ]; then
 fi
 # install nodejs
 if ! [ -x "$(command -v node)" ]; then
-  curl -sL install-node.now.sh | sh
+  curl -sL install-node.now.sh | bash -s -- -f
 fi
 
 # install bitwarden-cli
@@ -152,43 +152,10 @@ if ! [ -x "$(command -v kubectl)" ]; then
   chmod 755 /usr/local/bin/kubectl
 fi
 
-# install doctl
-if ! [ -x "$(command -v doctl)" ]; then
-  export DOCTL_VERSION="1.42.0"
-  wget https://github.com/digitalocean/doctl/releases/download/v${DOCTL_VERSION}/doctl-${DOCTL_VERSION}-linux-amd64.tar.gz
-  tar xf doctl-${DOCTL_VERSION}-linux-amd64.tar.gz 
-  chmod +x doctl 
-  mv doctl /usr/local/bin 
-  rm -f doctl-${DOCTL_VERSION}-linux-amd64.tar.gz
-fi
-
-# install terraform
-if ! [ -x "$(command -v terraform)" ]; then
-  export TERRAFORM_VERSION="0.12.24"
-  wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip 
-  unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip 
-  chmod +x terraform
-  mv terraform /usr/local/bin
-  rm -f terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-fi
-
-# install protobuf
-if ! [ -x "$(command -v protoc)" ]; then
-  export PROTOBUF_VERSION="3.11.4"
-  mkdir -p protobuf_install 
-  pushd protobuf_install
-  wget https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOBUF_VERSION}/protoc-${PROTOBUF_VERSION}-linux-x86_64.zip
-  unzip protoc-${PROTOBUF_VERSION}-linux-x86_64.zip
-  mv bin/protoc /usr/local/bin
-  mv include/* /usr/local/include/
-  popd
-  rm -rf protobuf_install
-fi
-
 # install tools
 if ! [ -x "$(command -v jump)" ]; then
   echo " ==> Installing jump .."
-  export JUMP_VERSION="0.30.1"
+  export JUMP_VERSION="0.40.0"
   wget https://github.com/gsamokovarov/jump/releases/download/v${JUMP_VERSION}/jump_${JUMP_VERSION}_amd64.deb
   sudo dpkg -i jump_${JUMP_VERSION}_amd64.deb
   rm -f jump_${JUMP_VERSION}_amd64.deb
@@ -254,11 +221,6 @@ if [ ! -d "$(go env GOPATH)" ]; then
   go get -u -v golang.org/x/tools/cmd/guru
   GO111MODULE=on go get golang.org/x/tools/gopls@latest
   go get -u -v golang.org/x/lint/golint
-
-  export GIT_TAG="v1.3.2" 
-  go get -d -u github.com/golang/protobuf/protoc-gen-go 
-  git -C "$(go env GOPATH)"/src/github.com/golang/protobuf checkout $GIT_TAG 
-  go install github.com/golang/protobuf/protoc-gen-go
 
   cp -r $(go env GOPATH)/bin/* /usr/local/bin/
 fi
