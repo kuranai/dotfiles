@@ -12,7 +12,6 @@ Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
 Plug 'elzr/vim-json', {'for' : 'json'}
 Plug 'ervandew/supertab'
 Plug 'gruvbox-community/gruvbox'
-Plug 'edkolev/tmuxline.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'fatih/vim-go'
 Plug 'fatih/vim-hclfmt'
@@ -106,10 +105,9 @@ endif
 syntax enable
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-set background=dark
 set termguicolors
 let g:gruvbox_contrast_dark = "hard"
-let g:gruvbox_contrast_light = "hard"
+set background=dark
 colorscheme gruvbox
 
 augroup filetypedetect
