@@ -56,7 +56,7 @@ sudo apt-get install -qq \
   pkg-config \
   protobuf-compiler \
   pwgen \
-  python \
+  #python \
   python3 \
   python3-flake8 \
   python3-pip \
@@ -95,6 +95,7 @@ sudo apt-get install -qq \
   python3-dev \
   default-jre \
   default-jdk \
+  python-is-python3 \
   --no-install-recommends \
 
 rm -rf /var/lib/apt/lists/*
