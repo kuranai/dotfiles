@@ -96,6 +96,8 @@ sudo apt-get install -qq \
   default-jre \
   default-jdk \
   python-is-python3 \
+  automake \
+  libjansson-dev \
   --no-install-recommends \
 
 rm -rf /var/lib/apt/lists/*
