@@ -56,7 +56,6 @@ sudo apt-get install -qq \
   pkg-config \
   protobuf-compiler \
   pwgen \
-  #python \
   python3 \
   python3-flake8 \
   python3-pip \
