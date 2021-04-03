@@ -1,30 +1,31 @@
 terraform {
   required_providers {
-    hcloud = {
-      source = "hetznercloud/hcloud"
-      version = "1.24.1"
+    scaleway = {
+      source = "scaleway/scaleway"
     }
   }
+  required_version = ">= 0.13"
 }
 
-provider "hcloud" {
-  # Configuration options
+provider "scaleway" {
+  zone            = "fr-par-1"
+  region          = "fr-par"
 }
 
-variable "region" {
-  default = "nbg1"
+locals {
+  image   = "ubuntu_focal"
+  type    = "DEV1-L"
 }
 
-data "hcloud_ssh_keys" "all_keys" {
-}
+resource "scaleway_instance_ip" "ip" {}
 
-resource "hcloud_server" "dev" {
+resource "scaleway_instance_server" "dev" {
   name     = "dev"
-  image    = "ubuntu-20.04"
-  server_type = "cpx31"
-  location = var.region
-  backups  = false
-  ssh_keys = data.hcloud_ssh_keys.all_keys.ssh_keys.*.name
+  image    = local.image
+  type     = local.type
+  #location = var.region
+  #backups  = false
+  ip_id    = scaleway_instance_ip.ip.id
 
   provisioner "file" {
     source      = "bootstrap.sh"
@@ -35,7 +36,7 @@ resource "hcloud_server" "dev" {
       user        = "root"
       private_key = file("~/.ssh/id_ed25519")
       timeout     = "2m"
-      host        = hcloud_server.dev.ipv4_address
+      host        = scaleway_instance_server.dev.public_ip
     }
   }
 
@@ -50,12 +51,12 @@ resource "hcloud_server" "dev" {
       user        = "root"
       private_key = file("~/.ssh/id_ed25519")
       timeout     = "2m"
-      host        = hcloud_server.dev.ipv4_address
+      host        = scaleway_instance_server.dev.public_ip
     }
   }
 }
 
-output "public_ip" {
-  value = hcloud_server.dev.ipv4_address
+output "server" {
+  sensitive = true
+  value     = scaleway_instance_server.dev.public_ip
 }
-
