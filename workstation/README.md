@@ -5,17 +5,19 @@ setup and ready to use mosh setup.
 
 ## Install
 
-1. Create workstation droplet
+1. Create workstation server
 
 ```
-$ export DIGITALOCEAN_TOKEN="Put Your Token Here" 
+$ export SCW_ACCESS_KEY="my-access-key"
+$ export SCW_SECRET_KEY="my-secret-key"
+$ export SCW_DEFAULT_PROJECT_ID="Project-id" #can be found here: https://console.scaleway.com/project/settings
 $ terraform plan
 $ terraform apply -auto-approve
 ```
 2. SSH via mosh:
 
 ```
-$ mosh --no-init --ssh="ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p 22" root@<DROPLET_IP> -- tmux new-session -ADs main
+$ mosh --no-init --ssh="ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p 22" root@<SERVER_IP> -- tmux new-session -ADs main
 $ ./secrets/pull-secrets.sh
 ```
 3. do some more setup
@@ -24,7 +26,3 @@ eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/github_rsa
 ```
 
-## Todo
-
-* Encrypt /mnt/secrets
-* Resync back some dynamic files (such as `.zsh_history`) back to 1password occasionally
